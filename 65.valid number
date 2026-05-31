@@ -1,0 +1,7 @@
+class Solution:
+    def isNumber(self, s):
+        try:
+            x = float(s)
+            return x != float('inf') and x != float('-inf')
+        except:
+            return False
