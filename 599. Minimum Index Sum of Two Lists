@@ -1,0 +1,15 @@
+class Solution:
+    def findRestaurant(self, list1: List[str], list2: List[str]) -> List[str]:
+        pos = {v: i for i, v in enumerate(list1)}
+        ans, best = [], float('inf')
+
+        for j, v in enumerate(list2):
+            if v in pos:
+                s = pos[v] + j
+                if s < best:
+                    best = s
+                    ans = [v]
+                elif s == best:
+                    ans.append(v)
+
+        return ans
