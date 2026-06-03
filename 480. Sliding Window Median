@@ -1,0 +1,20 @@
+from sortedcontainers import SortedList
+
+class Solution:
+    def medianSlidingWindow(self, nums: List[int], k: int) -> List[float]:
+        window = SortedList(nums[:k])
+        ans = []
+
+        for i in range(k, len(nums) + 1):
+            ans.append(
+                float(window[k // 2]) if k & 1
+                else (window[k // 2 - 1] + window[k // 2]) / 2
+            )
+
+            if i == len(nums):
+                break
+
+            window.remove(nums[i - k])
+            window.add(nums[i])
+
+        return ans
