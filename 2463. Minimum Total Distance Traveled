@@ -1,0 +1,25 @@
+from functools import lru_cache
+from typing import List
+
+class Solution:
+    def minimumTotalDistance(self, robot: List[int], factory: List[List[int]]) -> int:
+        robot.sort()
+        factory.sort()
+
+        positions = []
+        for pos, limit in factory:
+            positions.extend([pos] * limit)
+
+        @lru_cache(None)
+        def dp(i: int, j: int) -> int:
+            if i == len(robot):
+                return 0
+            if j == len(positions):
+                return float("inf")
+
+            skip = dp(i, j + 1)
+            take = abs(robot[i] - positions[j]) + dp(i + 1, j + 1)
+
+            return min(skip, take)
+
+        return dp(0, 0)
